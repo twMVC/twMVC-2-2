@@ -1,0 +1,19 @@
+
+CREATE TABLE [dbo].[NLog_Record](
+	[sequence_id] [int] IDENTITY(1,1) NOT NULL,
+	[time_stamp] [datetime] NOT NULL,
+	[level] [nvarchar](50) NOT NULL,
+	[host] [nvarchar](max) NOT NULL,
+	[url] [nvarchar](max) NOT NULL,
+	[type] [nvarchar](50) NOT NULL,
+	[source] [nvarchar](50) NOT NULL,
+	[logger] [nvarchar](50) NOT NULL,
+	[message] [nvarchar](max) NOT NULL,
+	[stacktrace] [nvarchar](max) NOT NULL,
+	[detail] [nvarchar](max) NOT NULL,
+	[allxml] [nvarchar](max) NOT NULL
+) ON [PRIMARY]
+
+GO
+
+

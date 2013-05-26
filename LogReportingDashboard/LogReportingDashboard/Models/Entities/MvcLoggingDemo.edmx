@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ErrorLogModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ErrorLogModelStoreContainer">
+          <EntitySet Name="ELMAH_Error" EntityType="ErrorLogModel.Store.ELMAH_Error" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NLog_Record" EntityType="ErrorLogModel.Store.NLog_Record" store:Type="Tables" store:Schema="dbo" store:Name="NLog_Record">
+            <DefiningQuery>SELECT 
+      [NLog_Record].[sequence_id] AS [sequence_id], 
+      [NLog_Record].[time_stamp] AS [time_stamp], 
+      [NLog_Record].[level] AS [level], 
+      [NLog_Record].[host] AS [host], 
+      [NLog_Record].[url] AS [url], 
+      [NLog_Record].[type] AS [type], 
+      [NLog_Record].[source] AS [source], 
+      [NLog_Record].[logger] AS [logger], 
+      [NLog_Record].[message] AS [message], 
+      [NLog_Record].[stacktrace] AS [stacktrace], 
+      [NLog_Record].[detail] AS [detail], 
+      [NLog_Record].[allxml] AS [allxml]
+      FROM [dbo].[NLog_Record] AS [NLog_Record]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Application" Type="nvarchar" Nullable="false" MaxLength="60" />
+          <Property Name="Host" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Source" Type="nvarchar" Nullable="false" MaxLength="60" />
+          <Property Name="Message" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="User" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="StatusCode" Type="int" Nullable="false" />
+          <Property Name="TimeUtc" Type="datetime" Nullable="false" />
+          <Property Name="Sequence" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="ntext" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+      警告 6002: 資料表/檢視 'ErrorLog.dbo.NLog_Record' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。
+      -->
+        <EntityType Name="NLog_Record">
+          <Key>
+            <PropertyRef Name="sequence_id" />
+            <PropertyRef Name="time_stamp" />
+            <PropertyRef Name="level" />
+            <PropertyRef Name="host" />
+            <PropertyRef Name="url" />
+            <PropertyRef Name="type" />
+            <PropertyRef Name="source" />
+            <PropertyRef Name="logger" />
+            <PropertyRef Name="message" />
+            <PropertyRef Name="stacktrace" />
+            <PropertyRef Name="detail" />
+            <PropertyRef Name="allxml" />
+          </Key>
+          <Property Name="sequence_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="time_stamp" Type="datetime" Nullable="false" />
+          <Property Name="level" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="host" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="type" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="source" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="logger" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="stacktrace" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="detail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="allxml" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ErrorLogModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MvcLoggingDemoContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ELMAH_Error" EntityType="ErrorLogModel.ELMAH_Error" />
+          <EntitySet Name="NLog_Record" EntityType="ErrorLogModel.NLog_Record" />
+        </EntityContainer>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" Unicode="true" FixedLength="false" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" Unicode="true" FixedLength="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="NLog_Record">
+          <Key>
+            <PropertyRef Name="sequence_id" />
+            <PropertyRef Name="time_stamp" />
+            <PropertyRef Name="level" />
+            <PropertyRef Name="host" />
+            <PropertyRef Name="url" />
+            <PropertyRef Name="type" />
+            <PropertyRef Name="source" />
+            <PropertyRef Name="logger" />
+            <PropertyRef Name="message" />
+            <PropertyRef Name="stacktrace" />
+            <PropertyRef Name="detail" />
+            <PropertyRef Name="allxml" />
+          </Key>
+          <Property Name="sequence_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="time_stamp" Type="DateTime" Nullable="false" />
+          <Property Name="level" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="host" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="source" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="logger" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="message" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="stacktrace" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="detail" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="allxml" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ErrorLogModelStoreContainer" CdmEntityContainer="MvcLoggingDemoContainer">
+          <EntitySetMapping Name="ELMAH_Error"><EntityTypeMapping TypeName="ErrorLogModel.ELMAH_Error"><MappingFragment StoreEntitySet="ELMAH_Error">
+            <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+            <ScalarProperty Name="Application" ColumnName="Application" />
+            <ScalarProperty Name="Host" ColumnName="Host" />
+            <ScalarProperty Name="Type" ColumnName="Type" />
+            <ScalarProperty Name="Source" ColumnName="Source" />
+            <ScalarProperty Name="Message" ColumnName="Message" />
+            <ScalarProperty Name="User" ColumnName="User" />
+            <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+            <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+            <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+            <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="NLog_Record"><EntityTypeMapping TypeName="ErrorLogModel.NLog_Record"><MappingFragment StoreEntitySet="NLog_Record">
+            <ScalarProperty Name="sequence_id" ColumnName="sequence_id" />
+            <ScalarProperty Name="time_stamp" ColumnName="time_stamp" />
+            <ScalarProperty Name="level" ColumnName="level" />
+            <ScalarProperty Name="host" ColumnName="host" />
+            <ScalarProperty Name="url" ColumnName="url" />
+            <ScalarProperty Name="type" ColumnName="type" />
+            <ScalarProperty Name="source" ColumnName="source" />
+            <ScalarProperty Name="logger" ColumnName="logger" />
+            <ScalarProperty Name="message" ColumnName="message" />
+            <ScalarProperty Name="stacktrace" ColumnName="stacktrace" />
+            <ScalarProperty Name="detail" ColumnName="detail" />
+            <ScalarProperty Name="allxml" ColumnName="allxml" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MvcLoggingDemo">
+        <EntityTypeShape EntityType="ErrorLogModel.ELMAH_Error" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833335" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErrorLogModel.NLog_Record" Width="1.5" PointX="2.75" PointY="0.75" Height="3.3263964843749996" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
