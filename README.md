@@ -30,3 +30,6 @@ ASP.NET MVC 偵測監控與 Log 記錄
 此為研討會範例檔案
 
 [http://mvc.tw/Event/Detail?y=2012&m=6&d=14](http://mvc.tw/Event/Detail?y=2012&m=6&d=14 "twMVC#2")
+
+為了避免檔案過大，因此使用的套件皆無上傳，請自行還原，還原方式請參考
+[http://demo.tc/Post/763](http://demo.tc/Post/763 "NuGet套件還原步驟使用Visual Studio 2012 為例")
